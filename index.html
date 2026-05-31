@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NameTot — Beautiful Baby Names, First Moments</title>
+<meta name="description" content="Discover beautiful baby names with meanings, origins, sibling matches and real-time trends. Free forever. Try NameSpark — find your name together."/>
+<meta name="theme-color" content="#B87878"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FDF7F5;--card:#fff;--border:#EDE0DC;
+  --primary:#B87878;--dark:#8A4A50;--highland:#3A2020;
+  --blue:#5A90AC;--green:#4A8A60;
+  --chemise:#F5E4E6;--textmid:#7A5060;--textlight:#C4A898;
+  --shadow:rgba(184,120,120,0.14);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--highland)}
+.fd{font-family:'Cormorant Garamond',Georgia,serif}
+
+/* ── COOKIE BANNER ── */
+#cookie{position:fixed;bottom:0;left:0;right:0;background:var(--highland);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:999;flex-wrap:wrap}
+#cookie p{font-size:13px;opacity:.85;line-height:1.5}
+#cookie a{color:#E8C0B0;text-decoration:underline}
+#cookie button{background:var(--primary);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;flex-shrink:0}
+
+/* ── HEADER ── */
+header{background:rgba(253,247,245,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 32px}
+.hinner{max-width:1200px;margin:0 auto;height:72px;display:flex;align-items:center;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.logo svg{width:48px;height:48px}
+.logo-text{display:flex;flex-direction:column}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;line-height:1;color:var(--highland)}
+.logo-name span{color:var(--primary)}
+.logo-tag{font-size:8px;letter-spacing:.12em;color:var(--textlight);text-transform:uppercase;font-weight:600}
+nav{display:flex;gap:2px;flex:1;align-items:center}
+nav a{text-decoration:none;font-size:13.5px;color:var(--textmid);padding:8px 12px;border-radius:8px;transition:.2s;white-space:nowrap}
+nav a:hover{color:var(--primary);background:var(--chemise)}
+.nav-fav{display:flex;align-items:center;gap:5px}
+.fav-count{background:var(--primary);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn-join{background:var(--primary);color:#fff;border:none;border-radius:50px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 14px var(--shadow);transition:.2s}
+.btn-join:hover{background:var(--dark)}
+
+/* ── HERO ── */
+.hero{max-width:1200px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center;min-height:480px}
+.hero-left{padding:56px 0}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(184,120,120,.1);border:1px solid rgba(184,120,120,.2);border-radius:24px;padding:6px 16px;margin-bottom:22px;font-size:13px;color:var(--primary);font-weight:500}
+.hero h1{font-size:clamp(36px,4.5vw,58px);font-weight:400;color:var(--highland);line-height:1.12;letter-spacing:-.02em;margin-bottom:16px}
+.hero h1 em{color:var(--primary);font-style:italic}
+.hero-sub{font-size:16px;color:var(--textmid);line-height:1.7;max-width:440px;margin-bottom:32px}
+.search-row{display:flex;background:#fff;border:1.5px solid var(--border);border-radius:50px;overflow:hidden;margin-bottom:20px;max-width:500px;transition:.2s}
+.search-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px rgba(184,120,120,.1)}
+.search-row input{flex:1;border:none;outline:none;padding:14px 20px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--highland);background:transparent}
+.search-row input::placeholder{color:var(--textlight)}
+.search-row button{background:var(--primary);color:#fff;border:none;padding:12px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.search-row button:hover{background:var(--dark)}
+.quick-pills{display:flex;gap:8px;flex-wrap:wrap}
+.qpill{border:1.5px solid var(--border);border-radius:50px;padding:8px 16px;background:#fff;cursor:pointer;font-size:13px;color:var(--textmid);font-family:'DM Sans',sans-serif;transition:.2s;display:flex;align-items:center;gap:5px}
+.qpill:hover,.qpill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* Hero image */
+.hero-right{position:relative;display:flex;justify-content:center;align-items:center}
+.hero-img-wrap{width:100%;max-width:400px;height:460px;border-radius:32px;overflow:hidden;box-shadow:0 24px 60px var(--shadow);position:relative}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover}
+.hero-img-badge{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(253,247,245,.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:50px;padding:10px 20px;font-size:13px;color:var(--primary);font-weight:600;white-space:nowrap;box-shadow:0 8px 24px var(--shadow)}
+
+/* ── TRENDING SECTION ── */
+.section-wrap{max-width:1200px;margin:0 auto;padding:56px 32px}
+.section-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.section-title{font-size:28px;color:var(--highland);font-weight:400;margin-bottom:4px}
+.section-sub{font-size:14px;color:var(--primary)}
+.view-all{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--textmid);text-decoration:none;border:1.5px solid var(--border);border-radius:50px;padding:8px 18px;transition:.2s}
+.view-all:hover{border-color:var(--primary);color:var(--primary)}
+
+/* Trending Cards */
+.trend-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.tcard{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:18px 16px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.tcard:hover{transform:translateY(-3px);box-shadow:0 12px 32px var(--shadow);border-color:var(--primary)}
+.tcard-rank{font-size:13px;font-weight:700;color:var(--textlight);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.tcard-name{font-size:30px;font-weight:500;letter-spacing:-.01em;margin-bottom:4px;line-height:1}
+.tcard-name.girl{color:var(--primary)}
+.tcard-name.boy{color:var(--blue)}
+.tcard-name.unisex{color:#7A5090}
+.tcard-meaning{font-size:12px;color:var(--textmid);line-height:1.4;margin-bottom:3px}
+.tcard-origin{font-size:11px;color:var(--textlight)}
+.tcard-trend{font-size:11px;font-weight:600;color:var(--green);margin-top:10px;padding-top:10px;border-top:1px solid #F0EBE3;display:flex;justify-content:space-between;align-items:center}
+.gender-badge{background:rgba(184,120,120,.12);color:var(--primary);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:600}
+.gender-badge.boy{background:rgba(90,144,172,.12);color:var(--blue)}
+.heart-btn{background:none;border:none;cursor:pointer;font-size:16px;line-height:1;transition:.2s}
+.heart-btn:hover{transform:scale(1.2)}
+
+/* ── STANDARD NAME GRID ── */
+.names-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.ncard{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:20px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.ncard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),#E8B0B0);opacity:0;transition:.25s}
+.ncard:hover{transform:translateY(-3px);box-shadow:0 12px 32px var(--shadow);border-color:var(--primary)}
+.ncard:hover::before{opacity:1}
+.ncard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.ncard-name{font-size:26px;font-weight:500;letter-spacing:-.01em}
+.ncard-name.girl{color:var(--primary)}
+.ncard-name.boy{color:var(--blue)}
+.ncard-name.unisex{color:#7A5090}
+.ncard-origin{font-size:11px;color:var(--textlight);margin-top:2px}
+.ncard-meaning{font-size:13px;color:var(--textmid);line-height:1.5;margin-bottom:12px}
+.ncard-footer{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag{background:#F5EAE8;color:#8A5858;border-radius:20px;padding:3px 10px;font-size:11px}
+.tag.boy{background:#E4EEF5;color:#3A6A84}
+.rank-badge{font-size:11px;color:var(--primary);font-weight:600;display:flex;align-items:center;gap:3px;margin-top:8px;padding-top:8px;border-top:1px solid #F0EBE3}
+
+/* ── GENDER FILTER TABS ── */
+.filter-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:0 32px;max-width:1200px;margin:0 auto 8px}
+.ftab{border:1.5px solid var(--border);border-radius:50px;padding:9px 20px;background:#fff;cursor:pointer;font-size:13px;color:var(--textmid);font-family:'DM Sans',sans-serif;transition:.2s}
+.ftab:hover,.ftab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* ── FEATURES ── */
+.features-bg{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.features-inner{max-width:1200px;margin:0 auto;padding:48px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.feat{display:flex;align-items:flex-start;gap:14px}
+.feat-icon{width:44px;height:44px;background:var(--bg);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;box-shadow:0 2px 8px var(--shadow)}
+.feat-title{font-size:14px;font-weight:700;color:var(--highland);margin-bottom:4px}
+.feat-desc{font-size:12px;color:var(--textmid);line-height:1.6}
+
+/* ── NAMESPARK SECTION ── */
+.spark-section{background:linear-gradient(135deg,var(--chemise) 0%,var(--bg) 100%);padding:72px 32px}
+.spark-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.spark-left h2{font-size:clamp(32px,4vw,52px);color:var(--highland);font-weight:300;margin-bottom:14px;letter-spacing:-.02em;line-height:1.1}
+.spark-left h2 em{color:var(--primary);font-style:italic}
+.spark-left p{font-size:16px;color:var(--textmid);line-height:1.7;margin-bottom:28px}
+.spark-badge{display:inline-block;background:rgba(184,120,120,.12);border:1px solid rgba(184,120,120,.2);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--primary);font-weight:700;letter-spacing:.06em;margin-bottom:16px;text-transform:uppercase}
+.spark-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-spark{background:var(--primary);color:#fff;border:none;border-radius:50px;padding:15px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 6px 24px var(--shadow);transition:.2s;display:flex;align-items:center;gap:8px}
+.btn-spark:hover{background:var(--dark);transform:translateY(-1px)}
+.btn-install{background:#fff;color:var(--primary);border:1.5px solid var(--border);border-radius:50px;padding:15px 28px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;display:flex;align-items:center;gap:8px}
+.btn-install:hover{border-color:var(--primary)}
+.spark-right{display:flex;flex-direction:column;gap:16px}
+.spark-step{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:20px 22px;display:flex;align-items:flex-start;gap:14px;transition:.2s;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.spark-step:hover{border-color:var(--primary);box-shadow:0 8px 24px var(--shadow)}
+.snum{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-title{font-size:14px;font-weight:700;color:var(--highland);margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--textmid)}
+
+/* Install modal */
+.install-modal{display:none;position:fixed;inset:0;background:rgba(20,10,5,.6);backdrop-filter:blur(6px);z-index:300;align-items:center;justify-content:center;padding:20px}
+.install-modal.open{display:flex}
+.install-box{background:#fff;border-radius:24px;padding:36px;max-width:400px;width:100%;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.2)}
+.install-box h3{font-size:26px;color:var(--highland);font-weight:400;margin-bottom:8px}
+.install-box p{font-size:14px;color:var(--textmid);line-height:1.6;margin-bottom:24px}
+.install-steps{text-align:left;margin-bottom:24px}
+.istep{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;padding:12px;background:var(--bg);border-radius:12px}
+.istep-n{width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.istep p{font-size:13px;color:var(--textmid);line-height:1.5}
+.close-btn{background:var(--bg);border:none;border-radius:50px;padding:12px 28px;font-size:14px;color:var(--textmid);cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* ── JOIN MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(20,10,5,.6);backdrop-filter:blur(6px);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:28px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 40px 80px rgba(0,0,0,.25)}
+.modal-head{background:linear-gradient(135deg,var(--primary),var(--dark));border-radius:28px 28px 0 0;padding:36px;color:#fff;text-align:center}
+.modal-head h2{font-size:38px;font-weight:300;margin-bottom:6px}
+.modal-head p{opacity:.8;font-size:15px}
+.modal-body{padding:28px 32px}
+.modal-input{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--highland);background:#fff;margin-bottom:12px;outline:none;transition:.2s}
+.modal-input:focus{border-color:var(--primary)}
+.modal-btn{width:100%;background:var(--primary);color:#fff;border:none;border-radius:50px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px var(--shadow);margin-bottom:10px;transition:.2s}
+.modal-btn:hover{background:var(--dark)}
+.modal-note{text-align:center;font-size:11px;color:var(--textlight)}
+.free-list{display:grid;gap:8px;margin-bottom:20px}
+.free-item{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:10px;padding:10px 14px}
+.free-item span{font-size:13px;color:var(--textmid)}
+.modal-close{background:rgba(255,255,255,.15);border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;color:#fff;font-size:16px;float:right;margin-top:-8px;margin-right:-8px;display:flex;align-items:center;justify-content:center}
+
+/* ── NAME DETAIL MODAL ── */
+.nmodal-head{background:linear-gradient(135deg,var(--primary),var(--dark));border-radius:28px 28px 0 0;padding:36px;color:#fff}
+.nmodal-name{font-size:64px;font-weight:300;letter-spacing:-.02em;line-height:1;margin-bottom:6px}
+.nmodal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.nstat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.nstat .v{font-size:20px;color:var(--highland);font-weight:500}
+.nstat .l{font-size:10px;color:var(--textlight);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.nsection{background:var(--bg);border-radius:12px;padding:16px;margin-bottom:12px}
+.nsection h4{font-size:11px;color:var(--primary);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.sib-pills{display:flex;flex-wrap:wrap;gap:8px}
+.sib-pill{font-family:'Cormorant Garamond',serif;background:#fff;border:1.5px solid var(--border);border-radius:50px;padding:6px 18px;font-size:16px;color:var(--primary);cursor:pointer;transition:.2s}
+.sib-pill:hover{border-color:var(--primary)}
+
+/* ── CTA BANNER ── */
+.cta-banner{background:linear-gradient(135deg,var(--primary),var(--dark));padding:40px 32px}
+.cta-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.cta-left{display:flex;align-items:center;gap:16px}
+.cta-icon{width:48px;height:48px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.cta-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:3px}
+.cta-sub{font-size:13px;color:rgba(255,255,255,.75)}
+.btn-white{background:#fff;color:var(--dark);border:none;border-radius:50px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;flex-shrink:0}
+.btn-white:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.15)}
+
+/* ── FOOTER ── */
+footer{background:var(--highland);padding:32px;text-align:center}
+footer p{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:8px}
+footer a{color:rgba(255,255,255,.5);text-decoration:none;margin:0 8px}
+footer a:hover{color:rgba(255,255,255,.8)}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:32px 20px 0}
+  .hero-right{display:none}
+  .trend-grid{grid-template-columns:repeat(2,1fr)}
+  .spark-inner{grid-template-columns:1fr}
+  .features-inner{grid-template-columns:repeat(2,1fr)}
+  nav{display:none}
+  .section-wrap{padding:40px 20px}
+  .filter-tabs{padding:0 20px}
+  .cta-banner{padding:32px 20px}
+}
+@media(max-width:500px){
+  .trend-grid{grid-template-columns:1fr 1fr}
+  .features-inner{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- COOKIE BANNER -->
+<div id="cookie">
+  <p>🍪 We use cookies to personalise your experience and show relevant content. By continuing you agree to our <a href="#privacy">Privacy Policy</a>.</p>
+  <button onclick="document.getElementById('cookie').style.display='none';localStorage.setItem('cookieOk','1')">Accept & Continue</button>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hinner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 85C50 85 12 58 12 33C12 20 22 12 33 12C40 12 46 16 50 22C54 16 60 12 67 12C78 12 88 20 88 33C88 58 50 85 50 85Z" fill="none" stroke="#B87878" stroke-width="4" stroke-linejoin="round"/>
+        <ellipse cx="36" cy="56" rx="8" ry="11" fill="#B87878" opacity=".85" transform="rotate(-15,36,56)"/>
+        <circle cx="27" cy="46" r="3" fill="#B87878" opacity=".85"/>
+        <circle cx="31" cy="43" r="3.2" fill="#B87878" opacity=".85"/>
+        <circle cx="36" cy="42" r="3" fill="#B87878" opacity=".85"/>
+        <circle cx="41" cy="43" r="2.8" fill="#B87878" opacity=".85"/>
+        <circle cx="44" cy="46" r="2.5" fill="#B87878" opacity=".85"/>
+        <ellipse cx="64" cy="56" rx="8" ry="11" fill="#5A90AC" opacity=".85" transform="rotate(15,64,56)"/>
+        <circle cx="56" cy="46" r="2.5" fill="#5A90AC" opacity=".85"/>
+        <circle cx="59" cy="43" r="2.8" fill="#5A90AC" opacity=".85"/>
+        <circle cx="64" cy="42" r="3" fill="#5A90AC" opacity=".85"/>
+        <circle cx="69" cy="43" r="3.2" fill="#5A90AC" opacity=".85"/>
+        <circle cx="73" cy="46" r="3" fill="#5A90AC" opacity=".85"/>
+      </svg>
+      <div class="logo-text">
+        <div class="logo-name">Name<span>Tot</span></div>
+        <div class="logo-tag">Beautiful Names, First Moments</div>
+      </div>
+    </a>
+    <nav>
+      <a href="#">Browse Names ▾</a>
+      <a href="#">Name Generator</a>
+      <a href="#">Baby Names by ▾</a>
+      <a href="#" class="nav-fav">Favourites <span class="fav-count" id="favCount">0</span></a>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-spark" style="padding:9px 18px;font-size:13px" onclick="document.getElementById('installModal').classList.add('open')">✨ NameSpark App</button>
+      <button class="btn-join" onclick="document.getElementById('joinModal').classList.add('open')">Join / Sign In</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section style="background:linear-gradient(135deg,#F5E8E4 0%,var(--bg) 60%)">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">✨ 47,000+ names · Meanings · Origins · AI Quiz</div>
+      <h1 class="fd">Find the perfect name<br/>for your <em>little one</em> ♡</h1>
+      <p class="hero-sub">Discover beautiful baby names, their meanings, origins and stories. Because every name tells a story.</p>
+      <div class="search-row">
+        <input type="text" id="searchInput" placeholder="Search for a name, meaning or origin…" oninput="filterNames()"/>
+        <button onclick="filterNames()">Search</button>
+      </div>
+      <div class="quick-pills">
+        <button class="qpill active" onclick="setFilter('all',this)">📈 Trending Now</button>
+        <button class="qpill" onclick="setFilter('classic',this)">⭑ Classic Names</button>
+        <button class="qpill" onclick="setFilter('short',this)">✦ Short Names</button>
+        <button class="qpill" onclick="setFilter('unique',this)">◈ Unique Names</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-wrap">
+        <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=800&q=80" alt="Beautiful newborn baby" loading="eager"/>
+        <div class="hero-img-badge">✨ Free forever · No subscription</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRENDING NAMES -->
+<section style="background:#fff;border-bottom:1px solid var(--border)">
+  <div class="section-wrap" style="padding-top:48px;padding-bottom:48px">
+    <div style="text-align:center;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px">
+        <div style="height:1px;width:40px;background:var(--border)"></div>
+        <span style="font-size:15px;color:var(--primary)">❧</span>
+        <div style="height:1px;width:40px;background:var(--border)"></div>
+      </div>
+      <h2 class="fd section-title">Trending Names</h2>
+      <p style="font-size:14px;color:var(--primary);margin-top:4px">The most loved names right now</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px">
+        <div style="height:1px;width:40px;background:var(--border)"></div>
+        <span style="font-size:12px;color:var(--primary)">♥</span>
+        <div style="height:1px;width:40px;background:var(--border)"></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+      <a href="#" class="view-all">View all trends →</a>
+    </div>
+    <div class="trend-grid" id="trendGrid"></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="features-bg">
+  <div class="features-inner">
+    <div class="feat"><div class="feat-icon">📖</div><div><div class="feat-title">Meaning & Origin</div><div class="feat-desc">Explore the beautiful meaning and origin behind every name</div></div></div>
+    <div class="feat"><div class="feat-icon">❤️</div><div><div class="feat-title">Curated with Love</div><div class="feat-desc">Handpicked names from around the world just for you</div></div></div>
+    <div class="feat"><div class="feat-icon">⭐</div><div><div class="feat-title">Save Your Favourites</div><div class="feat-desc">Save names you love and compare them easily</div></div></div>
+    <div class="feat"><div class="feat-icon">✨</div><div><div class="feat-title">Find Your Perfect Match</div><div class="feat-desc">The perfect name is waiting for your little one</div></div></div>
+  </div>
+</div>
+
+<!-- BROWSE ALL NAMES -->
+<div class="section-wrap" style="padding-bottom:8px">
+  <div class="section-top">
+    <div><h2 class="fd section-title">Browse All Names</h2><p style="font-size:14px;color:var(--textmid)">Filter by gender, style or search above</p></div>
+    <a href="#" class="view-all">View all →</a>
+  </div>
+</div>
+<div class="filter-tabs">
+  <button class="ftab active" onclick="setGender('all',this)">All</button>
+  <button class="ftab" onclick="setGender('girl',this)">♀ Girls</button>
+  <button class="ftab" onclick="setGender('boy',this)">♂ Boys</button>
+  <button class="ftab" onclick="setGender('unisex',this)">⚥ Unisex</button>
+</div>
+<div class="section-wrap" style="padding-top:20px">
+  <div class="names-grid" id="namesGrid"></div>
+</div>
+
+<!-- NAMESPARK SECTION -->
+<div class="spark-section">
+  <div class="spark-inner">
+    <div class="spark-left">
+      <div class="spark-badge">✨ Exclusive Feature</div>
+      <h2 class="fd">Find your name <em>together</em></h2>
+      <p>Both partners pick names independently. When you both love the same name — it ✨ Sparks. The most magical way to choose together.</p>
+      <div class="spark-btns">
+        <button class="btn-spark" onclick="document.getElementById('installModal').classList.add('open')">
+          📱 Get the Free App
+        </button>
+        <button class="btn-install" onclick="document.getElementById('joinModal').classList.add('open')">
+          Try Online Free →
+        </button>
+      </div>
+      <p style="font-size:12px;color:var(--textlight);margin-top:14px">✓ Free forever &nbsp; ✓ No App Store needed &nbsp; ✓ Works on all phones</p>
+    </div>
+    <div class="spark-right">
+      <div class="spark-step">
+        <div class="snum">1</div>
+        <div><div class="step-title">Partner 1 picks privately</div><div class="step-desc">Heart or skip names — your partner can't see your choices</div></div>
+      </div>
+      <div class="spark-step">
+        <div class="snum">2</div>
+        <div><div class="step-title">Partner 2 does the same</div><div class="step-desc">Completely independently — no peeking!</div></div>
+      </div>
+      <div class="spark-step">
+        <div class="snum" style="background:linear-gradient(135deg,var(--primary),var(--dark))">✨</div>
+        <div><div class="step-title">Your Sparks are revealed!</div><div class="step-desc">When you both love the same name — it's a ✨ Spark. Share the moment instantly.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <div class="cta-icon">❤️</div>
+      <div>
+        <div class="cta-title">Join thousands of parents who found their perfect name with NameTot</div>
+        <div class="cta-sub">Create an account to save your favourites and get personalised suggestions.</div>
+      </div>
+    </div>
+    <button class="btn-white" onclick="document.getElementById('joinModal').classList.add('open')">Join for Free</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 NameTot · Beautiful Names, First Moments</p>
+  <p>
+    <a href="#privacy" id="privacy">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Cookie Policy</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </p>
+</footer>
+
+<!-- INSTALL APP MODAL -->
+<div class="install-modal" id="installModal" onclick="document.getElementById('installModal').classList.remove('open')">
+  <div class="install-box" onclick="event.stopPropagation()">
+    <div style="font-size:48px;margin-bottom:12px">✨</div>
+    <h3 class="fd">Get NameSpark Free</h3>
+    <p>Install NameTot on your phone home screen — it works exactly like an app, completely free, no App Store needed.</p>
+    <div class="install-steps">
+      <div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">📱 On iPhone (Safari):</div>
+      <div class="istep"><div class="istep-n">1</div><p>Open <strong>nametot.com</strong> in Safari</p></div>
+      <div class="istep"><div class="istep-n">2</div><p>Tap the <strong>Share button</strong> (box with arrow at bottom)</p></div>
+      <div class="istep"><div class="istep-n">3</div><p>Tap <strong>"Add to Home Screen"</strong> → Add</p></div>
+      <div style="font-size:12px;font-weight:700;color:var(--blue);margin:14px 0 10px;text-transform:uppercase;letter-spacing:.06em">📱 On Android (Chrome):</div>
+      <div class="istep"><div class="istep-n">1</div><p>Open <strong>nametot.com</strong> in Chrome</p></div>
+      <div class="istep"><div class="istep-n">2</div><p>Tap the <strong>three dots menu</strong> (top right)</p></div>
+      <div class="istep"><div class="istep-n">3</div><p>Tap <strong>"Add to Home Screen"</strong> → Install</p></div>
+    </div>
+    <button class="close-btn" onclick="document.getElementById('installModal').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<!-- JOIN MODAL -->
+<div class="modal-overlay" id="joinModal" onclick="document.getElementById('joinModal').classList.remove('open')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <button class="modal-close" onclick="document.getElementById('joinModal').classList.remove('open')">✕</button>
+      <div style="font-size:48px;margin-bottom:12px">🌱</div>
+      <h2 class="fd">Join NameTot</h2>
+      <p>Free forever. No subscription. No catch.</p>
+    </div>
+    <div class="modal-body">
+      <div class="free-list">
+        <div class="free-item"><span>✨</span><span>NameSpark couples matching</span></div>
+        <div class="free-item"><span>💌</span><span>Beautiful name announcement cards</span></div>
+        <div class="free-item"><span>📅</span><span>Personalised pregnancy guide</span></div>
+        <div class="free-item"><span>❤️</span><span>Unlimited saved names</span></div>
+      </div>
+      <input class="modal-input" type="text" placeholder="Your first name"/>
+      <input class="modal-input" type="email" placeholder="Email address"/>
+      <input class="modal-input" type="date" placeholder="Due date (optional)"/>
+      <button class="modal-btn">Create Free Account →</button>
+      <p class="modal-note">No payment required. No credit card. Ever.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAME DETAIL MODAL -->
+<div class="modal-overlay" id="nameModal" onclick="document.getElementById('nameModal').classList.remove('open')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="nmodal-head">
+      <button class="modal-close" onclick="document.getElementById('nameModal').classList.remove('open')">✕</button>
+      <div id="mOrigin" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:6px"></div>
+      <div id="mName" class="fd nmodal-name"></div>
+      <p id="mMeaning" style="opacity:.88;font-size:16px;line-height:1.6"></p>
+    </div>
+    <div class="modal-body">
+      <div class="nmodal-stats">
+        <div class="nstat"><div class="v fd" id="mGender"></div><div class="l">Gender</div></div>
+        <div class="nstat"><div class="v fd" id="mRank"></div><div class="l">US Rank</div></div>
+        <div class="nstat"><div class="v fd" id="mSound"></div><div class="l">Sound</div></div>
+      </div>
+      <div class="nsection"><h4>✦ Sibling Name Matches</h4><div class="sib-pills" id="mSiblings"></div></div>
+      <div class="nsection"><h4>Tags</h4><div id="mTags" style="display:flex;flex-wrap:wrap;gap:6px"></div></div>
+      <button class="modal-btn" style="margin-top:12px" onclick="document.getElementById('joinModal').classList.add('open')">Save This Name ❤️</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Check cookie
+if(localStorage.getItem('cookieOk')) document.getElementById('cookie').style.display='none';
+
+const NAMES=[
+  {name:"Isla",gender:"girl",origin:"Scottish",meaning:"Island — serene and beautiful",short:"Island",sound:"Soft",rank:3,tags:["short","nature"],sibling:["Finn","Arlo","Flora","Mabel"],trend:"up",change:12,style:"classic"},
+  {name:"Noah",gender:"boy",origin:"Hebrew",meaning:"Rest; comfort — a calm and steady spirit",short:"Rest & comfort",sound:"Gentle",rank:2,tags:["biblical","short"],sibling:["Olivia","Ava","Elijah"],trend:"up",change:8,style:"classic"},
+  {name:"Aria",gender:"girl",origin:"Italian",meaning:"Air; song — a melody of life",short:"Song of life",sound:"Soft",rank:5,tags:["musical","elegant"],sibling:["Luca","Marco","Leo"],trend:"up",change:15,style:"classic"},
+  {name:"Oliver",gender:"boy",origin:"Latin",meaning:"Olive tree — symbol of peace and fruitfulness",short:"Olive tree",sound:"Balanced",rank:1,tags:["classic","gentle"],sibling:["Charlotte","Eleanor","Sebastian"],trend:"stable",change:2,style:"classic"},
+  {name:"Amelia",gender:"girl",origin:"Germanic",meaning:"Work; industrious and striving",short:"Industrious",sound:"Gentle",rank:1,tags:["classic","elegant"],sibling:["Oliver","Theodore","Jasper"],trend:"up",change:6,style:"classic"},
+  {name:"Theodore",gender:"boy",origin:"Greek",meaning:"Gift of God — wise and noble",short:"Gift of God",sound:"Strong",rank:8,tags:["vintage","classic"],sibling:["Amelia","Beatrice","Margot"],trend:"up",change:10,style:"classic"},
+  {name:"Aurora",gender:"girl",origin:"Latin",meaning:"Dawn — the first light of day",short:"Dawn",sound:"Gentle",rank:12,tags:["celestial","romantic"],sibling:["Orion","Felix","Iris"],trend:"up",change:9,style:"classic"},
+  {name:"Felix",gender:"boy",origin:"Latin",meaning:"Happy and fortunate — a life of joy",short:"Happy",sound:"Balanced",rank:28,tags:["joyful","classic"],sibling:["Margot","Celeste","Iris"],trend:"up",change:4,style:"classic"},
+  {name:"Luna",gender:"girl",origin:"Latin",meaning:"Moon — the eternal light of night",short:"The moon",sound:"Soft",rank:4,tags:["celestial","romantic"],sibling:["Orion","Lyra","Atlas"],trend:"stable",change:3,style:"classic"},
+  {name:"Jasper",gender:"boy",origin:"Persian",meaning:"Treasure keeper — a gemstone of ancient beauty",short:"Treasure",sound:"Balanced",rank:45,tags:["gem","vintage"],sibling:["Violet","Imogen","Beatrice"],trend:"up",change:7,style:"classic"},
+  {name:"Wren",gender:"unisex",origin:"Old English",meaning:"Small songbird — free, clever, full of song",short:"Songbird",sound:"Soft",rank:98,tags:["nature","short"],sibling:["Rowan","Sage","Fern"],trend:"up",change:16,style:"short"},
+  {name:"Iris",gender:"girl",origin:"Greek",meaning:"Rainbow — goddess and messenger of the gods",short:"Rainbow",sound:"Gentle",rank:48,tags:["nature","elegant"],sibling:["Felix","Jasper","Hugo"],trend:"up",change:9,style:"short"},
+  {name:"Hugo",gender:"boy",origin:"Germanic",meaning:"Mind and intellect — a great thinker",short:"Intellect",sound:"Strong",rank:36,tags:["classic","literary"],sibling:["Margot","Iris","Bea"],trend:"up",change:5,style:"classic"},
+  {name:"Margot",gender:"girl",origin:"French",meaning:"Pearl — precious, lustrous and rare",short:"Pearl",sound:"Soft",rank:68,tags:["French","elegant"],sibling:["Hugo","Felix","Iris"],trend:"up",change:14,style:"classic"},
+  {name:"Atlas",gender:"boy",origin:"Greek",meaning:"Bearer of worlds — strength and adventure",short:"The titan",sound:"Bold",rank:57,tags:["mythological","strong"],sibling:["Lyra","Aurora","Celeste"],trend:"up",change:18,style:"unique"},
+  {name:"Florence",gender:"girl",origin:"Latin",meaning:"Flourishing, in bloom — the city of flowers",short:"Flourishing",sound:"Gentle",rank:55,tags:["vintage","nature"],sibling:["Edmund","Barnaby","Cecily"],trend:"up",change:11,style:"classic"},
+  {name:"Ezra",gender:"unisex",origin:"Hebrew",meaning:"Helper and strength — a scribe of wisdom",short:"Helper",sound:"Balanced",rank:20,tags:["biblical","short"],sibling:["Iris","Eli","Naomi"],trend:"up",change:13,style:"short"},
+  {name:"Seraphina",gender:"girl",origin:"Hebrew",meaning:"Fiery angel — of the highest order of angels",short:"Fiery angel",sound:"Soft",rank:445,tags:["celestial","unique"],sibling:["Aurelius","Raphael","Celestine"],trend:"up",change:20,style:"unique"},
+  {name:"Orion",gender:"boy",origin:"Greek",meaning:"The hunter — a constellation of great strength",short:"The hunter",sound:"Bold",rank:88,tags:["celestial","strong"],sibling:["Aurora","Luna","Celeste"],trend:"up",change:18,style:"unique"},
+  {name:"Beatrice",gender:"girl",origin:"Latin",meaning:"She who brings happiness and blessings",short:"Bringer of joy",sound:"Gentle",rank:145,tags:["vintage","royal"],sibling:["Edmund","Barnaby","Cecily"],trend:"up",change:8,style:"classic"},
+];
+
+let savedNames=new Set();
+let currentGender="all";
+let currentStyle="all";
+let currentQuery="";
+
+function updateFavCount(){document.getElementById('favCount').textContent=savedNames.size}
+
+function toggleSave(name,btn,e){
+  if(e)e.stopPropagation();
+  if(savedNames.has(name)){savedNames.delete(name);btn.textContent="🤍";}
+  else{savedNames.add(name);btn.textContent="❤️";}
+  updateFavCount();
+}
+
+// Trending cards (top 5)
+function renderTrending(){
+  const grid=document.getElementById('trendGrid');
+  grid.innerHTML="";
+  const top=NAMES.slice(0,5);
+  top.forEach((n,i)=>{
+    const div=document.createElement('div');
+    div.className='tcard';
+    div.innerHTML=`
+      <div class="tcard-rank">
+        <span>#${i+1}</span>
+        <span class="gender-badge ${n.gender}">${n.gender==="girl"?"Girl":n.gender==="boy"?"Boy":"Unisex"}</span>
+      </div>
+      <div class="tcard-name fd ${n.gender}">${n.name}</div>
+      <div class="tcard-meaning">${n.short}</div>
+      <div class="tcard-origin">${n.origin}</div>
+      <div class="tcard-trend">
+        <span>▲ ${n.change} from last month</span>
+        <button class="heart-btn" onclick="toggleSave('${n.name}',this,event)">🤍</button>
+      </div>
+    `;
+    div.onclick=()=>openModal(n);
+    grid.appendChild(div);
+  });
+}
+
+// Name cards
+function renderNames(list){
+  const grid=document.getElementById('namesGrid');
+  grid.innerHTML="";
+  if(list.length===0){grid.innerHTML='<p style="color:var(--textlight);font-size:15px;padding:20px 0">No names found — try a different search</p>';return;}
+  list.forEach(n=>{
+    const div=document.createElement('div');
+    div.className='ncard';
+    const isSaved=savedNames.has(n.name);
+    div.innerHTML=`
+      <div class="ncard-top">
+        <div>
+          <div class="ncard-name fd ${n.gender}">${n.name}</div>
+          <div class="ncard-origin">${n.origin}</div>
+        </div>
+        <button class="heart-btn" onclick="toggleSave('${n.name}',this,event)">${isSaved?"❤️":"🤍"}</button>
+      </div>
+      <div class="ncard-meaning">${n.short}</div>
+      <div class="ncard-footer">
+        <span class="tag ${n.gender}">${n.gender==="girl"?"♀ Girl":n.gender==="boy"?"♂ Boy":"⚥ Unisex"}</span>
+        ${n.tags.slice(0,1).map(t=>`<span class="tag">${t}</span>`).join("")}
+      </div>
+      ${n.rank<=100?`<div class="rank-badge">★ Ranked #${n.rank} in the US</div>`:""}
+    `;
+    div.onclick=()=>openModal(n);
+    grid.appendChild(div);
+  });
+}
+
+function getFiltered(){
+  let list=NAMES;
+  if(currentQuery){const q=currentQuery.toLowerCase();list=list.filter(n=>n.name.toLowerCase().includes(q)||n.short.toLowerCase().includes(q)||n.origin.toLowerCase().includes(q)||n.tags.some(t=>t.includes(q)));}
+  if(currentGender!=="all") list=list.filter(n=>n.gender===currentGender);
+  if(currentStyle==="classic") list=list.filter(n=>n.tags.includes("classic"));
+  else if(currentStyle==="short") list=list.filter(n=>n.tags.includes("short"));
+  else if(currentStyle==="unique") list=list.filter(n=>n.rank>200||n.tags.includes("unique"));
+  return list;
+}
+
+function filterNames(){currentQuery=document.getElementById('searchInput').value;renderNames(getFiltered())}
+function setGender(g,btn){currentGender=g;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderNames(getFiltered())}
+function setFilter(f,btn){currentStyle=f;document.querySelectorAll('.qpill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderNames(getFiltered())}
+
+function openModal(n){
+  document.getElementById('mOrigin').textContent=n.origin.toUpperCase();
+  document.getElementById('mName').textContent=n.name;
+  document.getElementById('mMeaning').textContent=n.meaning;
+  document.getElementById('mGender').textContent=n.gender==="girl"?"♀ Girl":n.gender==="boy"?"♂ Boy":"⚥ Unisex";
+  document.getElementById('mRank').textContent="#"+n.rank;
+  document.getElementById('mSound').textContent=n.sound;
+  document.getElementById('mSiblings').innerHTML=n.sibling.map(s=>`<span class="sib-pill">${s}</span>`).join("");
+  document.getElementById('mTags').innerHTML=n.tags.map(t=>`<span class="tag">${t}</span>`).join("");
+  document.getElementById('nameModal').classList.add('open');
+}
+
+// Init
+renderTrending();
+renderNames(NAMES);
+</script>
+</body>
+</html>
